@@ -1,0 +1,79 @@
+$sudo apt-get install python-mysqldb  //to make python connectable with mysql
+
+get django on djangoproject.com, extract compressed file somewhere, move to extraced directory
+
+$sudo python setup.py install
+
+you can delete the Django folder after instalation, if you want. It is not needed anymore
+
+$sudo apt-get install mysql-server-5.5 
+
+installs mysql server, check newest version!
+create a password for root user during instalation
+
+$sudo apt-get install apache2 //installs apache
+$sudo apt-get install libapache2-mod-wsgi //interface for python-apache
+
+create a .wsgi file anywhere (project.wsgi)
+
+$vim projectname.wsgi
+
+from this point on we need sudo almost all the time
+
+$sudo -s
+create .conf file in /etc/apache2/sites-abalible/ (projectname.conf)
+#vim projectname.conf
+
+enable this sites with
+
+#a2ensite projectname.conf
+
+create project at this point
+
+#cd /var/www/
+
+in this folder run django command startproject
+
+#django-admin.py startproject projectname
+
+restart apache to see if everything went ok
+
+#service apache2 restart
+
+localy point projectname.com to local host
+
+#vim /etc/hosts
+
+add this line (note that ip is not real)
+
+192.168.0.2 projectname.com
+
+if you try to reach projectname.com you should see It worked!
+set up database, use mysql comand line interface
+
+#mysql -u root -p
+>show databases;
+>create database projectname;
+>exit
+
+edit settings.py in /var/www/projectname/projectname/settings.py
+
+#vim settings.py
+
+setup database in DATABASE dict
+enable admin by uncomenting a line in INSTALLED APPS tuple
+edit /var/www/projectname/projectname/urls.py
+
+#vim urls.py
+
+uncomment import, autodiscover and url map lines
+go to /var/www/projectname to access manage.py and sync the database
+
+#python manage.py syncdb
+
+system will ask you to create a user (this is our admin that will have access to our backend
+we can access /admin, but the interface is crap. copy django css to our project
+
+#cp -r /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static /var/www/projectname/
+
+start developing:)
